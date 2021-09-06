@@ -4,11 +4,9 @@ from tkinter import filedialog
 from tkinter import messagebox
 
 def openFolder():
-    tf = filedialog.askopenfilename(
-        initialdir="/Users/Cody/Desktop/folder_A/", 
-        title="Open Text file", 
-        filetypes=(("Text Files", "*.txt"),)
-        )
+    tf = filedialog.askdirectory(
+        initialdir="/", 
+        title="Open Text file", )
     pathh.insert(END, tf)
     tf = open(tf)  # or tf = open(tf, 'r')
     data = tf.read() #read file
@@ -16,11 +14,9 @@ def openFolder():
     tf.close()
 
 def openFolder_2():
-    tf = filedialog.askopenfilename(
-        initialdir="/Users/Cody/Desktop/folder_B/", 
-        title="Open Text file", 
-        filetypes=(("Text Files", "*.txt"),)
-        )
+    tf = filedialog.askdirectory(
+        initialdir="/", 
+        title="Open Text file", )
     pathh.insert(END, tf)
     tf = open(tf)  
     data = tf.read()
