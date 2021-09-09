@@ -1,77 +1,43 @@
-import os
 from tkinter import *
+from tkinter import ttk
 from tkinter import filedialog
-from tkinter import messagebox
+import os
 
-def openFolder():
-    tf = filedialog.askdirectory(
-        initialdir="/", 
-        title="Open Text file", )
-    pathh.insert(END, tf)
-    tf = open(tf)  # or tf = open(tf, 'r')
-    data = tf.read() #read file
-    txtarea.insert(END, data) #insert text from text.doc when file is clicked
-    tf.close()
+gui = Tk()
+gui.geometry("400x400")
+gui.title("FC")
+#class that contains all prop and fun for selecting a folder
+class FolderSelect(Frame):
+    def __init__(self,parent=None,folderDescription="",**kw):
+        Frame.__init__(self,master=parent,**kw)
+        self.folderPath = StringVar()
+        self.lblName = Label(self, text=folderDescription)
+        self.lblName.grid(row=0,column=0)
+        self.entPath = Entry(self, textvariable=self.folderPath)
+        self.entPath.grid(row=0,column=1)
+        self.btnFind = ttk.Button(self, text="Browse Folder",command=self.setFolderPath)
+        self.btnFind.grid(row=0,column=2)
+    def setFolderPath(self):
+        folder_selected = filedialog.askdirectory()
+        self.folderPath.set(folder_selected)
+    
+    def folder_path(self):
+        return self.folderPath.get()
+#runs file check from test file move
+def filecheck():
+    os.system('test_file_move.py') 
+    
 
-def openFolder_2():
-    tf = filedialog.askdirectory(
-        initialdir="/", 
-        title="Open Text file", )
-    pathh.insert(END, tf)
-    tf = open(tf)  
-    data = tf.read()
-    txtarea.insert(END, data)
-    tf.close()
+folderPath = StringVar()
 
-def run():
-    os.system('test_file_move.py') #runs file check from test file move
-    messagebox.showinfo('info', 'New and Edited files have been moved from Folder A to Folder B')
+directory1Select = FolderSelect(gui,"Select Folder 1")
+directory1Select.grid(row=0)
 
-def clear_textbox():
-    txtarea.delete(1.0, 'end')
-         
-ws = Tk()
-ws.title("Read and Run File check on File A and File B")
-ws.geometry("800x450")
-ws['bg']='black'
-
-
-
-
-txtarea = Text(ws, width=40, height=20)
-txtarea.pack(pady=20)
-
-pathh = Entry(ws)
-pathh.pack(side=RIGHT, expand=True, fill=X, padx=20)
+directory2Select = FolderSelect(gui,"Select Folder 2")
+directory2Select.grid(row=1)
 
 
-#open Folder A
-Button(
-    ws, 
-    text="Open Folder A", 
-    command=openFolder
-    ).pack(side=LEFT, expand=True, fill=X, padx=20)
-#open Folder B 
-Button(
-    ws, 
-    text="Open Folder B", 
-    command=openFolder_2
-    ).pack(side=RIGHT, expand=True, fill=X, padx=20)
-#run file check
-Button(
-    ws, 
-    text="Run File Check", 
-    command=run
-    ).pack(side=TOP, expand=True, fill=X, padx=20)
 
-#clear text box
-Button(
-    ws,
-    text='Clear',
-    width=15,
-    height=2,
-    command=clear_textbox
-    ).pack(expand=True)
-
-
-ws.mainloop()
+c = ttk.Button(gui, text="file check", command=filecheck)
+c.grid(row=4,column=0)
+gui.mainloop()
