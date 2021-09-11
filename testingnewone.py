@@ -2,7 +2,7 @@ from tkinter import *
 from tkinter import ttk
 from tkinter import filedialog
 import shutil
-
+#tkinter widgets
 def widgets():
     lbl = Label(root ,text="Files to Copy")
     lbl.grid(row= 1 ,column = 0)
@@ -25,17 +25,17 @@ def widgets():
     copy_btn = Button(root, text = "Copy Files", command = copy)
     copy_btn.grid(row=3, column=1)
 
-
+#using askopenfilename to select files to copy
 def src():
     root.src_files = filedialog.askopenfilenames()
     root.src_txt.insert('1',root.src_files)
     
-
+#using askopendirectory to send the files that are being copied
 def dest():
     dest_selected = filedialog.askdirectory()
     root.dest_txt.insert('1', dest_selected)
     
-
+#copying files from the src to the dest folder using shutil.copy method
 def copy():
     src_files = root.src_files
     dest_folder = dest_location.get()
@@ -46,7 +46,7 @@ def copy():
 root = Tk()
 root.geometry("400x400")
 root.title("Move Files")
-
+#tkinter variable 
 src_location = StringVar()
 dest_location = StringVar()
 
